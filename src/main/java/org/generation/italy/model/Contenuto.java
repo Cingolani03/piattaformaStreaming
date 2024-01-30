@@ -1,20 +1,27 @@
 
 package org.generation.italy.model;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 
 // la classe seguente è collegata con una tab del DB 
 @Entity 
 public class Contenuto implements Comparable<Contenuto>{ 
+	@ManyToOne(optional = false)
+    private Regista regista;
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //l'ID verrà autogenerato ad ogni inserimento di riga
 	private int id;
 	
-	@Column
+	@Column (nullable = false, length=20)
 	private String titolo;
 	
 	@Column (nullable=false, length=20)  // nullable serve a dire se la colonna della tabella può essere nulla
@@ -47,6 +54,56 @@ this.anno=anno;
 
 
 
+
+
+public Regista getRegista() {
+	return regista;
+}
+
+
+public void setRegista(Regista regista) {
+	this.regista = regista;
+}
+
+
+public int getId() {
+	return id;
+}
+
+
+public void setId(int id) {
+	this.id = id;
+}
+
+
+public List<Attore> getElencoAttori() {
+	return elencoAttori;
+}
+
+
+public void setElencoAttori(List<Attore> elencoAttori) {
+	this.elencoAttori = elencoAttori;
+}
+
+
+public void setTipologia(String tipologia) {
+	this.tipologia = tipologia;
+}
+
+
+public void setGenere(String genere) {
+	this.genere = genere;
+}
+
+
+public void setAnno(int anno) {
+	this.anno = anno;
+}
+
+
+public void setDurata(int durata) {
+	this.durata = durata;
+}
 
 
 public String getTitolo() {
@@ -99,10 +156,7 @@ else //se i nomi sono sono uguali ordino per anno
 }
 }
 
-
-
-
-
-
-
+  @ManyToMany 
+   private List<Attore> elencoAttori;
+   
 }
