@@ -3,7 +3,6 @@ package org.generation.italy.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 import org.generation.italy.model.Contenuto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import ch.qos.logback.core.model.Model;
 
 @Controller
 @RequestMapping("/Contenuti")
@@ -21,6 +22,7 @@ public class contenutiController<ContenutiRepository> {
 @GetMapping("/visione")
 @ResponseBody
 public String elencoContenuti(
+		Model model,
 		String ordinamento,
 		@RequestParam(required=false)String titolo,
 		@RequestParam(required=false)String tipologia,
@@ -52,12 +54,13 @@ public String elencoContenuti(
 		else 
 			return "ordinamneto non valido";
 		}
-		StringBuilder elenco=new StringBuilder();
-		elenco.append("prende le cose dal DB"+elencoContenuti.size());
-        elenco.append("<br> <br>");
-		for (Contenuto p:elencoContenuti)
-				elenco.append(p.toString()+ "<br>");
-		return elenco.toString();
+	model.addAttribute("visone",elencoContenuti);
+//		StringBuilder elenco=new StringBuilder();
+//		elenco.append("prende le cose dal DB"+elencoContenuti.size());
+//        elenco.append("<br> <br>");
+//		for (Contenuto p:elencoContenuti)
+//				elenco.append(p.toString()+ "<br>");
+		return "/www/piattaforma";
 
 }
 
